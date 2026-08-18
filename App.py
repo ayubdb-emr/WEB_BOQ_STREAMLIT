@@ -483,7 +483,11 @@ if menu == "BOQ Smart Downloader":
 
                     if kmz_path.lower().endswith(".kmz"):
                         with zipfile.ZipFile(kmz_path, "r") as z:
-                            kml_file = [f for f in z.namelist() if f.endswith(".kml")][0]
+                            kml_files = [f for f in z.namelist() if f.lower().endswith(".kml")]
+                            if not kml_files:
+                                st.error("File KMZ tidak berisi file KML yang valid.")
+                                st.stop()
+                            kml_file = kml_files[0]
                             raw = z.read(kml_file).decode("utf-8", "ignore")
                     else:
                         raw = open(kmz_path, encoding="utf-8").read()
@@ -506,19 +510,18 @@ if menu == "BOQ Smart Downloader":
                     boq_total_fat_line = {}
                     boq_pole = {}
 
-                    for i in range(1, 11):
-                        boq_strand_wire[i] = []
-                        boq_pole[i] = {
-                            "7M5": 0, "7M4": 0, "7M3": 0, "7M25": 0,
-                            "9M5": 0, "9M4": 0, "LN": 0, "MTI": 0, "MR": 0,
-                        }
-
                     for line_name, line_folder in line_folders:
                         CODE_FAT = extract_line_code(line_name)
                         line_letter = CODE_FAT[0].upper()
                         fdt_index = extract_fdt_index_from_line_name(line_name, len(FDT_CODES))
                         if fdt_index is None:
                             fdt_index = 1
+
+                        boq_strand_wire.setdefault(fdt_index, [])
+                        boq_pole.setdefault(fdt_index, {
+                            "7M5": 0, "7M4": 0, "7M3": 0, "7M25": 0,
+                            "9M5": 0, "9M4": 0, "LN": 0, "MTI": 0, "MR": 0,
+                        })
 
                         fat_count_by_fdt.setdefault(fdt_index, 0)
                         G, start_node, _ = build_graph_from_line_folder(line_folder)
@@ -669,6 +672,10 @@ elif menu == "Multi FDT Processor":
     fdt_codes_raw = st.text_input("MASUKKAN CODE FDT (pisahkan dengan koma):", "FDT.01")
     FDT_CODES = [x.strip() for x in fdt_codes_raw.split(",") if x.strip()]
 
+    if not FDT_CODES:
+        st.error("Code FDT tidak boleh kosong. Harap masukkan minimal 1 kode (Contoh: FDT.01).")
+        st.stop()
+
     col1, col2, col3, col4 = st.columns(4)
     with col1:
         NEW_START = st.number_input("Start NEW POLE", value=1, min_value=1)
@@ -691,9 +698,10 @@ elif menu == "Multi FDT Processor":
                     
                     if uploaded_file.name.lower().endswith(".kmz"):
                         with zipfile.ZipFile(io.BytesIO(file_bytes), "r") as z:
-                            kml_files = [f for f in z.namelist() if f.endswith(".kml")]
+                            kml_files = [f for f in z.namelist() if f.lower().endswith(".kml")]
                             if not kml_files:
                                 st.error("File KMZ tidak berisi file KML.")
+                                st.stop()
                             kml_file = kml_files[0]
                             raw = z.read(kml_file).decode("utf-8", "ignore")
                     else:
@@ -722,7 +730,7 @@ elif menu == "Multi FDT Processor":
                             CODE_FAT = extract_line_code(line_name)
                             fat_no = FAT_START
 
-                            fdt_index = extract_fdt_index_from_line_name(line_name, FDT_CODES)
+                            fdt_index = extract_fdt_index_from_line_name(line_name, len(FDT_CODES))
                             CODE_FDT_CURRENT = get_fdt_code_by_index(FDT_CODES, fdt_index)
 
                             if fdt_index is None:

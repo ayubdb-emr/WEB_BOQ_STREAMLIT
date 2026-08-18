@@ -1,0 +1,6 @@
+streamlit
+openpyxl
+gdown
+shapely
+networkx
+pyproj

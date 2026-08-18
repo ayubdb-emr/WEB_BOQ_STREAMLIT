@@ -27,12 +27,6 @@ st.set_page_config(
 # Sembunyikan Header dan Footer Streamlit
 hide_st_style = """
     <style>
-    /* Sembunyikan header bawaan Hugging Face Spaces */
-    header[data-testid="stHeader"] {
-        display: none !important;
-    }
-    
-    /* Sembunyikan MainMenu Streamlit jika perlu */
     #MainMenu {visibility: hidden;}
     footer {visibility: hidden;}
     </style>

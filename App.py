@@ -438,7 +438,7 @@ menu = st.sidebar.radio("Pilih Tools:", ["BOQ", "Rename KMZ"])
 # ============================================================
 # MENU 1: BOQ SMART DOWNLOADER
 # ============================================================
-if menu == "BOQ Smart Downloader":
+if menu == "BOQ":
     st.title("Aplikasi BOQ Only - Smart Downloader")
     st.write("Target Sheet: **BoM CLUSTER AE**")
 
@@ -661,7 +661,7 @@ if menu == "BOQ Smart Downloader":
 # ============================================================
 # MENU 2: MULTI FDT PROCESSOR
 # ============================================================
-elif menu == "Multi FDT Processor":
+elif menu == "Rename KMZ":
     st.title("Multi FDT Processor - KMZ/KML Utility")
     st.write("Alat otomatisasi pemrosesan jalur network, penomoran tiang, FAT, Handhole, Sling Wire, dan Kabel.")
 

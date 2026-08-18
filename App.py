@@ -25,7 +25,14 @@ st.set_page_config(
 )
 
 # Sembunyikan Header dan Footer Streamlit
-
+hide_st_style = """
+            <style>
+            #MainMenu {visibility: hidden;}
+            header {visibility: hidden;}
+            footer {visibility: hidden;}
+            </style>
+            """
+st.markdown(hide_st_style, unsafe_allow_html=True)
 geod = Geod(ellps="WGS84")
 
 # ================= CONFIG & HELPER FUNCTIONS =================

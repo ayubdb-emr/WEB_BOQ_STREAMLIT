@@ -11,7 +11,6 @@ from shapely.geometry import LineString, Point
 import networkx as nx
 from pyproj import Geod
 
-# Konfigurasi Halaman & Sembunyikan Menu Bawaan
 st.set_page_config(
     page_title="Tools Dashboard",
     page_icon="🛠️",
@@ -23,7 +22,6 @@ st.set_page_config(
         'About': None
     }
 )
-
 # Sembunyikan Header dan Footer Streamlit
 hide_st_style = """
             <style>

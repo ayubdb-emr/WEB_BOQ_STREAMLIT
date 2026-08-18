@@ -13,7 +13,7 @@ from pyproj import Geod
 
 # Konfigurasi Halaman & Sembunyikan Menu Bawaan
 st.set_page_config(
-    page_title="EMR Tools Dashboard",
+    page_title="Tools Dashboard",
     page_icon="🛠️",
     layout="wide",
     menu_items={
@@ -432,7 +432,7 @@ def set_linestyle_color(pm, hex_color, width="3"):
 # ================= NAVIGASI SIDEBAR =================
 
 st.sidebar.title("Dashboard Menu")
-menu = st.sidebar.radio("Pilih Tools:", ["BOQ Smart Downloader", "Multi FDT Processor"])
+menu = st.sidebar.radio("Pilih Tools:", ["BOQ", "Rename KMZ"])
 
 
 # ============================================================

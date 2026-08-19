@@ -24,29 +24,6 @@ st.set_page_config(
     }
 )
 
-# === KODE CSS SPESIFIK: HANYA MENYEMBUNYIKAN TOMBOL AKSI & MENU KANAN ATAS TANPA MENYENTUH SIDEBAR ===
-st.markdown("""
-    <style>
-    /* Menyembunyikan tombol Deploy, GitHub, Star di kanan atas */
-    [data-testid="stToolbar"] {
-        display: none !important;
-    }
-    /* Menyembunyikan tombol menu titik tiga (Hamburger menu) di kanan atas */
-    #MainMenu {
-        visibility: hidden !important;
-    }
-    /* Menyembunyikan footer */
-    footer {
-        visibility: hidden !important;
-    }
-    /* Memastikan tombol navigasi sidebar di kiri tetap tampil normal */
-    [data-testid="collapsedControl"] {
-        display: block !important;
-        visibility: visible !important;
-    }
-    </style>
-""", unsafe_allow_html=True)
-
 geod = Geod(ellps="WGS84")
 
 # ================= CONFIG & HELPER FUNCTIONS =================

@@ -23,7 +23,17 @@ st.set_page_config(
         'About': None
     }
 )
-
+# === TAMBAHKAN KODE INI DI SINI ===
+st.markdown("""
+    <style>
+    /* Menghilangkan toolbar pojok kanan atas Streamlit */
+    [data-testid="stToolbar"] {
+        visibility: hidden;
+        height: 0px;
+        position: fixed;
+    }
+    </style>
+""", unsafe_allow_html=True)
 # Sembunyikan Header dan Footer Streamlit
 hide_st_style = """
     <style>

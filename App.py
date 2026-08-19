@@ -24,22 +24,20 @@ st.set_page_config(
     }
 )
 
-# CSS: Hilangkan Toolbar Kanan Atas Tanpa Merusak Tombol Sidebar Kiri
+# === KODE CSS YANG AMAN: HANYA MENYEMBUNYIKAN TOMBOL AKSI KANAN ATAS ===
 st.markdown("""
     <style>
-    /* Menyembunyikan tombol dekoratif di kanan atas (Share, Star, GitHub, dll) */
-    header [data-testid="stToolbar"] {
+    /* Menyembunyikan tombol aksi/deploy/GitHub di kanan atas secara spesifik */
+    header [data-testid="stToolbar"] > div {
+        display: none !important;
+    }
+    /* Menyembunyikan menu titik tiga / hamburger bawaan pojok kanan atas */
+    #MainMenu {
         visibility: hidden !important;
     }
-    /* Memastikan tombol kontrol untuk membuka/menutup sidebar di kiri tetap muncul */
-    [data-testid="collapsedControl"] {
-        display: block !important;
-        visibility: visible !important;
-        z-index: 999999;
-    }
-    /* Sembunyikan Footer Streamlit */
+    /* Menyembunyikan footer */
     footer {
-        visibility: hidden;
+        visibility: hidden !important;
     }
     </style>
 """, unsafe_allow_html=True)
@@ -432,7 +430,7 @@ def set_linestyle_color(pm, hex_color, width="3"):
         line_style = ET.SubElement(style_el, "LineStyle")
     color_el = line_style.find("color")
     if color_el is None:
-        color_el = ET.SubElement(style_el, "color")
+        color_el = ET.SubElement(line_style, "color")
     color_el.text = kml_color
     width_el = line_style.find("width")
     if width_el is None:

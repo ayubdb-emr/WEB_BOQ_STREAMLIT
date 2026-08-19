@@ -11,7 +11,7 @@ from shapely.geometry import LineString, Point
 import networkx as nx
 from pyproj import Geod
 
-# Konfigurasi Halaman & Sembunyikan Menu Bawaan
+# Konfigurasi Halaman & Sidebar Terbuka Otomatis
 st.set_page_config(
     page_title="EMR Tools Dashboard",
     page_icon="🛠️",
@@ -23,27 +23,27 @@ st.set_page_config(
         'About': None
     }
 )
+
+# CSS: Hilangkan Toolbar Kanan Atas Tanpa Merusak Tombol Sidebar Kiri
 st.markdown("""
     <style>
-    /* Menyembunyikan toolbar dekoratif di kanan atas (Share, Star, GitHub, dll) */
+    /* Menyembunyikan tombol dekoratif di kanan atas (Share, Star, GitHub, dll) */
     header [data-testid="stToolbar"] {
-        display: none !important;
+        visibility: hidden !important;
     }
-    /* Memastikan tombol menu navigasi sidebar di kiri tetap muncul dan berfungsi */
+    /* Memastikan tombol kontrol untuk membuka/menutup sidebar di kiri tetap muncul */
     [data-testid="collapsedControl"] {
         display: block !important;
         visibility: visible !important;
+        z-index: 999999;
+    }
+    /* Sembunyikan Footer Streamlit */
+    footer {
+        visibility: hidden;
     }
     </style>
 """, unsafe_allow_html=True)
-# Sembunyikan Header dan Footer Streamlit
-hide_st_style = """
-    <style>
-    #MainMenu {visibility: hidden;}
-    footer {visibility: hidden;}
-    </style>
-"""
-st.markdown(hide_st_style, unsafe_allow_html=True)
+
 geod = Geod(ellps="WGS84")
 
 # ================= CONFIG & HELPER FUNCTIONS =================
@@ -432,7 +432,7 @@ def set_linestyle_color(pm, hex_color, width="3"):
         line_style = ET.SubElement(style_el, "LineStyle")
     color_el = line_style.find("color")
     if color_el is None:
-        color_el = ET.SubElement(line_style, "color")
+        color_el = ET.SubElement(style_el, "color")
     color_el.text = kml_color
     width_el = line_style.find("width")
     if width_el is None:

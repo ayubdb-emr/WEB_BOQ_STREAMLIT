@@ -23,14 +23,16 @@ st.set_page_config(
         'About': None
     }
 )
-# === TAMBAHKAN KODE INI DI SINI ===
 st.markdown("""
     <style>
-    /* Menghilangkan toolbar pojok kanan atas Streamlit */
-    [data-testid="stToolbar"] {
-        visibility: hidden;
-        height: 0px;
-        position: fixed;
+    /* Menyembunyikan toolbar dekoratif di kanan atas (Share, Star, GitHub, dll) */
+    header [data-testid="stToolbar"] {
+        display: none !important;
+    }
+    /* Memastikan tombol menu navigasi sidebar di kiri tetap muncul dan berfungsi */
+    [data-testid="collapsedControl"] {
+        display: block !important;
+        visibility: visible !important;
     }
     </style>
 """, unsafe_allow_html=True)
